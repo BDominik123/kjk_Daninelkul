@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaland-Játék-Kockázat</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="./js/script.js" defer></script>
+    <script src="./js/audio.js" defer></script>
+    <script src="./js/settings.js" defer></script>
+    <link rel="icon" href="./images/lol.ico">
+    
+</head>
+
+<body>
+    <button id="settings-btn" aria-label="Beállítások">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap: "round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="16" x2="12" y2="12" />
+            <line x1="12" y1="8" x2="12.01" y2="8" />
+        </svg>
+    </button>
+    <div id="settings-overlay"></div>
+    <div id="settings-panel" role="dialog" aria-label="Beállítások panel">
+        <div class="panel-topbar"></div>
+
+        <div class="panel-header">
+            <h2>Információ</h2>
+        </div>
+
+        <div class="panel-body">
+            <div>
+                <p>Készítette:</p>
+                <ul>
+                    <li>Kovács Dániel</li>
+                    <li>Balogh Dominik</li>
+                </ul>
+                <p>Osztály: 11/F</p>
+                <p>Zene: <a href="https://www.youtube.com/watch?v=7_cwKd81z7Q" target="_blank">zene</a></p>
+            </div>
+        </div>
+        
+        <div class="panel-header">
+            <h2>Beállítások</h2>
+        </div>
+
+        <div class="panel-body">
+            <div class="setting-section">
+                <span class="setting-label">Háttérzene</span>
+                <div class="setting-row">
+                    <svg viewBox="0 0 24 24" id="speaker-icon">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                        <path id="speaker-waves" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" />
+                    </svg>
+                    <div class="volume-slider-wrap">
+                        <input type="range" id="volume-range" min="0" max="100" value="70" aria-label="Hangerő">
+                        <div class="volume-value" id="volume-display">70%</div>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:flex-end;">
+                    <button class="mute-btn" id="mute-btn">Némítás</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <p>Kaland-Játék-Kockázat &mdash; A Sötétség Erdeje</p>
+        </div>
+    </div>
+
+    <audio id="bg-music" src="music.mp3" loop></audio>
+
+    <div class="game-container">
+        <header>
+            <h1>A Sötétség Erdeje</h1>
+        </header>
+        <main id="story-text">Betöltés...</main>
+        
+       <div id="player-stats">
+    <b style="color: white; text-transform: uppercase;">Statisztika</b><br>
+    ❤️ Életerő: <span id="hp">40</span>/40 <br>
+    🎲 Ügyesség: <span id="skill">20</span> <br>
+    🧪 Varázsital: <span id="potions">3</span> db <br>
+    🎒 Hátizsák: <span id="inventory">Üres</span>
+</div>
+
+        <div id="choices-container"></div>
+    </div>
+
+    <script>
+
+    </script>
+
+</body>
+
+</html>
