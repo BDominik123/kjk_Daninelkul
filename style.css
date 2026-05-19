@@ -1,0 +1,324 @@
+body {
+    background-image: url("./images/background.jpg");
+    background-position: center;
+    background-size: cover;
+    backdrop-filter: blur(10px);
+    background-repeat: no-repeat;
+    color: #333;
+    font-family: 'Georgia', serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+#player-stats {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #222;
+    color: #ffcc00;
+    padding: 15px 20px;
+    border: 2px solid #ffcc00;
+    border-radius: 8px;
+    font-size: 1.1em;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+    z-index: 1000;
+}
+
+.fight-btn { background: #880000 !important; font-weight: bold; border-color: #ff0000; }
+        .fight-btn:hover { background: #ff0000 !important; color: white !important; }
+
+        
+.flee-btn {
+    background-color: #444; /* Más szín a menekülésnek */
+    color: #fff;
+    margin-top: 10px;
+}
+.flee-btn:hover {
+    background-color: #666;
+}
+
+.game-container {
+    background-color: #f4ecd8;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    max-width: 600px;
+    width: 90%;
+    border: 2px solid #8b5a2b;
+}
+
+h1 {
+    color: #8b5a2b;
+    text-align: center;
+    font-size: 1.8rem;
+    border-bottom: 2px solid #8b5a2b;
+    padding-bottom: 10px;
+}
+
+.potion-btn { background: #1b5e20 !important; border-color: #4caf50; }
+        .potion-btn:hover { background: #4caf50 !important; color: white !important; }
+        .potion-btn:disabled { background: #333 !important; color: #777 !important; cursor: not-allowed; border-color: #444; }
+
+
+#story-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+#choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.choice-btn {
+    background-color: #8b5a2b;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-family: 'Georgia', serif;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+    text-align: left;
+}
+
+.choice-btn:hover {
+    background-color: #5c3a1a;
+}
+
+#settings-btn {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 200;
+    background: #f4ecd8;
+    border: 2px solid #8b5a2b;
+    border-radius: 8px;
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s, transform 0.25s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+#settings-btn:hover {
+    background: #e6dac2;
+    border-color: #5c3a1a;
+}
+
+#settings-btn.open {
+    transform: rotate(45deg);
+}
+
+#settings-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: #8b5a2b;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+#settings-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 150;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+#settings-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#settings-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 300px;
+    max-width: 85vw;
+    z-index: 160;
+    background-color: #f4ecd8;
+    border-right: 2px solid #8b5a2b;
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.25);
+    transform: translateX(-100%);
+    transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+#settings-panel.open {
+    transform: translateX(0);
+}
+
+.panel-topbar {
+    height: 4px;
+    background: #8b5a2b;
+}
+
+.panel-header {
+    padding: 28px 24px 18px 68px;
+    border-bottom: 2px solid rgba(139, 90, 43, 0.25);
+    border-top: 2px solid rgba(139, 90, 43, 0.25);
+}
+
+.panel-header h2 {
+    margin: 0;
+    font-family: 'Georgia', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #8b5a2b;
+}
+
+.panel-body {
+    flex: 1;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    overflow-y: auto;
+}
+
+.setting-section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.setting-label {
+    font-family: 'Georgia', serif;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    color: #5c3a1a;
+}
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.setting-row svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: #8b5a2b;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    flex-shrink: 0;
+}
+
+.volume-slider-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+input[type="range"]#volume-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 5px;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    background: linear-gradient(
+        to right,
+        #8b5a2b var(--vol-pct, 70%),
+        rgba(139, 90, 43, 0.2) var(--vol-pct, 70%)
+    );
+}
+
+input[type="range"]#volume-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #8b5a2b;
+    border: 2px solid #f4ecd8;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.15s;
+}
+
+input[type="range"]#volume-range::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    background: #5c3a1a;
+}
+
+input[type="range"]#volume-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #8b5a2b;
+    border: 2px solid #f4ecd8;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+.volume-value {
+    font-family: 'Georgia', serif;
+    font-size: 0.85rem;
+    color: #8b5a2b;
+    text-align: right;
+    font-weight: bold;
+}
+
+.mute-btn {
+    background-color: #8b5a2b;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    color: white;
+    font-family: 'Georgia', serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.mute-btn:hover {
+    background-color: #5c3a1a;
+}
+
+.mute-btn.muted {
+    background-color: #bfa88f;
+    color: #f4ecd8;
+}
+
+.panel-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(139, 90, 43, 0.3), transparent);
+    margin: 0 -24px;
+}
+
+.panel-footer {
+    padding: 18px 24px 24px;
+    border-top: 1px solid rgba(139, 90, 43, 0.15);
+}
+
+.panel-footer p {
+    margin: 0;
+    font-family: 'Georgia', serif;
+    font-size: 0.75rem;
+    color: rgba(92, 58, 26, 0.6);
+    text-align: center;
+    font-style: italic;
+}
