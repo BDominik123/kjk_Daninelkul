@@ -1,0 +1,163 @@
+{
+  "1": {
+    "type": "story",
+    "text": "Egy sötét erdő szélén állsz. Előtted az út kétfelé ágazik. Nyugat felől baljóslatú morajlást hallasz, míg a keleti ösvény csendesnek tűnik. A célod, hogy megszerezd a Fekete Torony kincsét, de a ládához 3 kulcsra lesz szükséged.",
+    "choices": [
+      { "text": "Elindulsz nyugat felé a zaj irányába.", "next": "2" },
+      { "text": "A csendesebb, keleti utat választod.", "next": "3" }
+    ]
+  },
+  "2": {
+    "type": "combat",
+    "enemy": { "name": "Barlangi Troll", "hp": 12, "skill": 8 },
+    "text": "Ahogy belépsz a sűrűbe, egy hatalmas barlangi troll ugrik eléd! Nincs időd menekülni, harcolnod kell.",
+    "choices": [
+      { "text": "Ha legyőzted a Trollt, kutasd át a tetemét.", "next": "4" }
+    ]
+  },
+  "3": {
+    "type": "story",
+    "text": "A keleti út egy békés tisztásra vezet, ahol egy tiszta vizű forrást találsz. Megszomjaztál?",
+    "choices": [
+      { "text": "Iszol a forrásból, hogy erőre kapj.", "next": "6" },
+      { "text": "Gyanús a dolog, inkább mész tovább északnak.", "next": "7" }
+    ]
+  },
+  "4": {
+    "type": "story",
+    "rewards": ["rez_kulcs"],
+    "text": "A Troll tetemét átkutatva a nyakában találsz egy fényes rézkulcsot! Elrakod a zsákodba. Eldöntheted, merre mész tovább.",
+    "choices": [
+      { "text": "Behatolsz a troll mögötti sötét barlangba.", "next": "8" },
+      { "text": "Visszafordulsz és inkább a keleti utat választod.", "next": "3" }
+    ]
+  },
+  "5": {
+    "type": "game_over",
+    "text": "A kalandod itt véget ért. Nem voltál elég felkészült, vagy rossz döntést hoztál.",
+    "choices": []
+  },
+  "6": {
+    "type": "game_over",
+    "text": "A víz jéghideg és gyanúsan édes. Amint lenyeled, elönt a gyengeség: a forrás mérgezett volt! Összeesel és meghalsz. A kalandod itt véget ért.",
+    "choices": []
+  },
+  "7": {
+    "type": "story",
+    "text": "Észak felé haladva az erdő ritkulni kezd, és egy elhagyatott, romos templomhoz érsz. A bejáratnál egy kőoltár áll.",
+    "choices": [
+      { "text": "Belépsz a templom sötét belsejébe.", "next": "9" },
+      { "text": "Elkerülöd a romokat és a mocsár felé veszed az irányt.", "next": "10" }
+    ]
+  },
+  "8": {
+    "type": "story",
+    "text": "A barlang mélyén egy fészket találsz, amit egy óriáspók őriz. A pók mögött egy csillogó ezüstkulcs fekszik a földön.",
+    "choices": [
+      { "text": "Megküzdesz az óriáspókkal a kulcsért.", "next": "11" },
+      { "text": "Túl veszélyes, inkább megpróbálsz kisurranni a mocsár felé.", "next": "10" }
+    ]
+  },
+  "9": {
+    "type": "riddle",
+    "text": "A templom belsejében egy kísértet lebeg a levegőben. 'Csak az mehet tovább, aki válaszol a kérdésemre: Mi az, ami minél több van belőle, annál kevesebbet nyom?'",
+    "choices": [
+      { "text": "Azt válaszolod: 'A lyuk.'", "next": "12" },
+      { "text": "Azt válaszolod: 'Az arany.'", "next": "13" }
+    ]
+  },
+  "10": {
+    "type": "combat",
+    "enemy": { "name": "Mocsári Zombi", "hp": 8, "skill": 6 },
+    "text": "A mocsár bűzös és ködös. Hirtelen egy mocsári zombi emelkedik ki az iszapból, elállva az utadat.",
+    "choices": [
+      { "text": "Ha legyőzted a zombit, átkutatod a ruháját.", "next": "14" },
+      { "text": "Megpróbálod megkerülni, de elvéted a lépést a mocsárban...", "next": "15" }
+    ]
+  },
+  "11": {
+    "type": "combat",
+    "enemy": { "name": "Óriáspók", "hp": 10, "skill": 7 },
+    "text": "A pók sziszegve ront rád, a potrohából hálót lő feléd!",
+    "choices": [
+      { "text": "Miután elpusztítottad a fenevadat, felveszed az ezüstkulcsot.", "next": "11_reward" }
+    ]
+  },
+  "11_reward": {
+    "type": "story",
+    "rewards": ["ezust_kulcs"],
+    "text": "Elteszed a csillogó ezüstkulcsot. A barlang hátsó kijárata egyenesen a Fekete Torony lábához vezet.",
+    "choices": [
+      { "text": "Elindulsz a Fekete Torony felé.", "next": "16" }
+    ]
+  },
+  "12": {
+    "type": "story",
+    "rewards": ["arany_kulcs"],
+    "text": "A kísértet elmosolyodik. 'Helyes válasz! Jutalmad ez a kulcs.' – azzal átnyújt egy színarany kulcsot. A templom hátsó ajtaja a Fekete Toronyhoz vezet.",
+    "choices": [
+      { "text": "Átlépsz a hátsó ajtón a torony irányába.", "next": "16" }
+    ]
+  },
+  "13": {
+    "type": "game_over",
+    "text": "'Hibás válasz!' – ordítja a kísértet. Sikolya megfagyasztja a véredet, és a lelked a romok fogságában marad mindörökre. A kalandod itt véget ért.",
+    "choices": []
+  },
+  "14": {
+    "type": "story",
+    "rewards": ["arany_kulcs"],
+    "text": "A zombi zsebében egy díszes aranykulcsot találsz! Elrakod. A mocsárból kiérve megpillantod a Fekete Tornyot.",
+    "choices": [
+      { "text": "A Fekete Torony kapujához sietsz.", "next": "16" }
+    ]
+  },
+  "15": {
+    "type": "game_over",
+    "text": "Futás közben elvéted a lépést és elnyel a feneketlen mocsár. Senki nem fogja megtalálni a testedet. A kalandod itt véget ért.",
+    "choices": []
+  },
+  "16": {
+    "type": "combat",
+    "enemy": { "name": "Lángoló Csontvázlovag", "hp": 15, "skill": 9 },
+    "text": "Megérkeztél a Fekete Torony monumentális kapujához. A kaput egy lángoló csontvázlovag őrzi!",
+    "choices": [
+      { "text": "Ha legyőzted az őrt, megvizsgálod a hamvait.", "next": "17" }
+    ]
+  },
+  "17": {
+    "type": "story",
+    "rewards": ["torony_kulcs"],
+    "text": "A hamvak közül kigördül egy különleges Toronykulcs. Ez nyitja a belső kaput. Belépsz a torony belső csarnokába.",
+    "choices": [
+      { "text": "Belépsz a csarnokba.", "next": "18" }
+    ]
+  },
+  "18": {
+    "type": "story",
+    "text": "A csarnok közepén egy hatalmas, vaspántos láda áll. A ládán pontosan három különböző kulcslyuk található: egy réz, egy ezüst és egy arany.",
+    "choices": [
+      { "text": "Odalépsz a ládához és megpróbálod kinyitni.", "next": "19" }
+    ]
+  },
+  "19": {
+    "type": "check_inventory",
+    "text": "A kódod itt ellenőrzi a hátizsákodat. Megvan a 'rez_kulcs', az 'ezust_kulcs' és az 'arany_kulcs'?",
+    "choices": [
+      { 
+        "text": "[Kinyitás] Megvan mind a három kulcsom.", 
+        "requires": ["rez_kulcs", "ezust_kulcs", "arany_kulcs"], 
+        "next": "20" 
+      },
+      { 
+        "text": "Hiányzik valami... (Ha nincs meg mind a három, ide kell kattintanod)", 
+        "next": "5" 
+      }
+    ]
+  },
+  "20": {
+    "type": "victory",
+    "text": "Behelyezed a Réz, az Ezüst és az Arany kulcsot a zárakba. Mindhárom kattan, a láda fedele felpattan! Odabent megpillantod a mesés kincset és az Igazság Koronáját. Gratulálok, sikeresen teljesítetted a küldetést!",
+    "choices": []
+  }
+}
