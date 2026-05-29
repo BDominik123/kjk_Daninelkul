@@ -17,25 +17,47 @@ body {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #222;
-    color: #ffcc00;
+    background-color: #f4ecd8;
+    color: #5c3a1a;
     padding: 15px 20px;
-    border: 2px solid #ffcc00;
+    border: 2px solid #8b5a2b;
     border-radius: 8px;
     font-size: 1.1em;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     z-index: 1000;
 }
 
-.fight-btn { background: #880000 !important; font-weight: bold; border-color: #ff0000; }
-        .fight-btn:hover { background: #ff0000 !important; color: white !important; }
+#player-stats b {
+    color: #8b5a2b !important;
+}
 
-        
+.combat-box {
+    background: #4a0000; 
+    color: #ffffff;
+    padding: 15px; 
+    margin-top: 15px; 
+    border-radius: 5px; 
+    border-left: 5px solid #ff3333;
+}
+
+.fight-btn { 
+    background: #880000 !important; 
+    font-weight: bold; 
+    border-color: #ff0000; 
+    color: white !important;
+}
+
+.fight-btn:hover { 
+    background: #ff0000 !important; 
+    color: white !important; 
+}
+
 .flee-btn {
-    background-color: #444; /* Más szín a menekülésnek */
+    background-color: #444; 
     color: #fff;
     margin-top: 10px;
 }
+
 .flee-btn:hover {
     background-color: #666;
 }
@@ -58,10 +80,23 @@ h1 {
     padding-bottom: 10px;
 }
 
-.potion-btn { background: #1b5e20 !important; border-color: #4caf50; }
-        .potion-btn:hover { background: #4caf50 !important; color: white !important; }
-        .potion-btn:disabled { background: #333 !important; color: #777 !important; cursor: not-allowed; border-color: #444; }
+.potion-btn { 
+    background: #1b5e20 !important; 
+    border-color: #4caf50; 
+    color: white !important;
+}
 
+.potion-btn:hover { 
+    background: #4caf50 !important; 
+    color: white !important; 
+}
+
+.potion-btn:disabled { 
+    background: #333 !important; 
+    color: #777 !important; 
+    cursor: not-allowed; 
+    border-color: #444; 
+}
 
 #story-text {
     font-size: 1.2rem;
@@ -162,6 +197,7 @@ h1 {
     flex-direction: column;
     overflow: hidden;
 }
+
 #settings-panel.open {
     transform: translateX(0);
 }

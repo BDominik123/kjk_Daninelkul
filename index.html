@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="hu">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,17 +9,18 @@
     <script src="./js/audio.js" defer></script>
     <script src="./js/settings.js" defer></script>
     <link rel="icon" href="./images/lol.ico">
-    
-</head>
 
+</head>
 <body>
     <button id="settings-btn" aria-label="Beállítások">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap: "round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap: "round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10" />
             <line x1="12" y1="16" x2="12" y2="12" />
             <line x1="12" y1="8" x2="12.01" y2="8" />
         </svg>
     </button>
+
     <div id="settings-overlay"></div>
     <div id="settings-panel" role="dialog" aria-label="Beállítások panel">
         <div class="panel-topbar"></div>
@@ -40,7 +40,7 @@
                 <p>Zene: <a href="https://www.youtube.com/watch?v=7_cwKd81z7Q" target="_blank">zene</a></p>
             </div>
         </div>
-        
+
         <div class="panel-header">
             <h2>Beállítások</h2>
         </div>
@@ -76,22 +76,16 @@
             <h1>A Sötétség Erdeje</h1>
         </header>
         <main id="story-text">Betöltés...</main>
-        
-       <div id="player-stats">
-    <b style="color: white; text-transform: uppercase;">Statisztika</b><br>
-    ❤️ Életerő: <span id="hp">40</span>/40 <br>
-    🎲 Ügyesség: <span id="skill">20</span> <br>
-    🧪 Varázsital: <span id="potions">3</span> db <br>
-    🎒 Hátizsák: <span id="inventory">Üres</span>
-</div>
+
+        <div id="player-stats">
+            <b style="color: white; text-transform: uppercase;">Statisztika</b><br>
+            ❤️ Életerő: <span id="hp">40</span>/40 <br>
+            🎲 Ügyesség: <span id="skill">20</span> <br>
+            🧪 Varázsital: <span id="potions">3</span> db <br>
+            🎒 Hátizsák: <span id="inventory">Üres</span>
+        </div>
 
         <div id="choices-container"></div>
     </div>
-
-    <script>
-
-    </script>
-
 </body>
-
 </html>
