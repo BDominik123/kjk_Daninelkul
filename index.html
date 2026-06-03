@@ -1,91 +1,151 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaland-Játék-Kockázat</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="./js/script.js" defer></script>
-    <script src="./js/audio.js" defer></script>
-    <script src="./js/settings.js" defer></script>
-    <link rel="icon" href="./images/lol.ico">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Parázskapuk Labirintusa</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="./images/lol.ico">
+  <script src="script.js" defer></script>
 </head>
 <body>
-    <button id="settings-btn" aria-label="Beállítások">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap: "round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" y1="16" x2="12" y2="12" />
-            <line x1="12" y1="8" x2="12.01" y2="8" />
-        </svg>
-    </button>
+  <audio id="bg-music" src="music.mp3" loop preload="auto"></audio>
 
-    <div id="settings-overlay"></div>
-    <div id="settings-panel" role="dialog" aria-label="Beállítások panel">
-        <div class="panel-topbar"></div>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Kaland, kocka, kockázat</p>
+        <h1>A Parázskapuk Labirintusa</h1>
+      </div>
+      <div class="topbar-actions" aria-label="Játékvezérlés">
+        <button class="icon-button" id="musicToggle" type="button" aria-label="Zene indítása vagy némítása" title="Zene">♪</button>
+        <button class="icon-button" id="rulesToggle" type="button" aria-label="Szabályok megnyitása" title="Szabályok">?</button>
+        <button class="icon-button" id="resetButton" type="button" aria-label="Új játék" title="Új játék">↻</button>
+      </div>
+    </header>
 
-        <div class="panel-header">
-            <h2>Információ</h2>
-        </div>
+    <main class="layout">
+      <section class="story-panel" aria-live="polite">
+        <div class="chapter-kicker" id="chapterKicker">Betöltés</div>
+        <h2 id="chapterTitle">A történet előkészítése</h2>
+        <div class="story-copy" id="storyText"></div>
 
-        <div class="panel-body">
+        <div class="combat-panel hidden" id="combatPanel">
+          <div class="combat-head">
             <div>
-                <p>Készítette:</p>
-                <ul>
-                    <li>Kovács Dániel</li>
-                    <li>Balogh Dominik</li>
-                </ul>
-                <p>Osztály: 11/F</p>
-                <p>Zene: <a href="https://www.youtube.com/watch?v=7_cwKd81z7Q" target="_blank">zene</a></p>
+              <p class="panel-label">Harc</p>
+              <h3 id="enemyName">Ellenfél</h3>
             </div>
+            <div class="enemy-stats" id="enemyStats"></div>
+          </div>
+          <div class="health-row">
+            <span>Te</span>
+            <div class="meter"><span id="playerMeter"></span></div>
+            <strong id="playerMeterText"></strong>
+          </div>
+          <div class="health-row">
+            <span>Ellenfél</span>
+            <div class="meter enemy"><span id="enemyMeter"></span></div>
+            <strong id="enemyMeterText"></strong>
+          </div>
+          <div class="combat-log" id="combatLog"></div>
         </div>
 
-        <div class="panel-header">
-            <h2>Beállítások</h2>
-        </div>
+        <div class="choice-list" id="choices"></div>
+      </section>
 
-        <div class="panel-body">
-            <div class="setting-section">
-                <span class="setting-label">Háttérzene</span>
-                <div class="setting-row">
-                    <svg viewBox="0 0 24 24" id="speaker-icon">
-                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                        <path id="speaker-waves" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" />
-                    </svg>
-                    <div class="volume-slider-wrap">
-                        <input type="range" id="volume-range" min="0" max="100" value="70" aria-label="Hangerő">
-                        <div class="volume-value" id="volume-display">70%</div>
-                    </div>
-                </div>
-                <div style="display:flex; justify-content:flex-end;">
-                    <button class="mute-btn" id="mute-btn">Némítás</button>
-                </div>
+      <aside class="side-panel">
+        <section class="hero-sheet">
+          <div class="sheet-head">
+            <div>
+              <p class="panel-label">Kalandlap</p>
+              <h2>Állapot</h2>
             </div>
-        </div>
+            <button class="small-button" id="eatButton" type="button">Élelem</button>
+          </div>
 
-        <div class="panel-footer">
-            <p>Kaland-Játék-Kockázat &mdash; A Sötétség Erdeje</p>
-        </div>
+          <div class="stat-grid">
+            <div class="stat">
+              <span>Ügyesség</span>
+              <strong id="skillValue">0</strong>
+              <small id="skillInitial">/ 0</small>
+            </div>
+            <div class="stat">
+              <span>Életerő</span>
+              <strong id="staminaValue">0</strong>
+              <small id="staminaInitial">/ 0</small>
+            </div>
+            <div class="stat">
+              <span>Szerencse</span>
+              <strong id="luckValue">0</strong>
+              <small id="luckInitial">/ 0</small>
+            </div>
+            <div class="stat">
+              <span>Élelem</span>
+              <strong id="foodValue">0</strong>
+              <small>adag</small>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <span>Arany</span>
+            <strong id="goldValue">0</strong>
+          </div>
+          <div class="resource-row">
+            <span>Varázsital</span>
+            <strong id="potionValue">-</strong>
+          </div>
+          <div class="resource-row">
+            <span>Fegyver</span>
+            <strong id="weaponValue">Kard</strong>
+          </div>
+        </section>
+
+        <section class="inventory-panel">
+          <div class="sheet-head compact">
+            <div>
+              <p class="panel-label">Zsák</p>
+              <h2>Tárgyak</h2>
+            </div>
+            <button class="small-button" id="potionButton" type="button">Ital</button>
+          </div>
+          <div class="inventory-list" id="inventoryList"></div>
+        </section>
+
+        <section class="dice-panel">
+          <p class="panel-label">Dobások</p>
+          <div class="dice-display" id="diceDisplay">-</div>
+          <div class="event-log" id="eventLog"></div>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="setupModal" role="dialog" aria-modal="true" aria-labelledby="setupTitle">
+    <div class="modal">
+      <p class="eyebrow">Kalandlap készítése</p>
+      <h2 id="setupTitle">Dobj kezdőértékeket</h2>
+      <p>A hős pontjai kockadobással indulnak: Ügyesség 1k6+6, Életerő 2k6+12, Szerencse 1k6+6. Egyetlen varázsitalt vihetsz, de két adag van benne.</p>
+      <div class="rolled-stats" id="rolledStats"></div>
+      <div class="potion-picker" id="potionPicker"></div>
+      <div class="modal-actions">
+        <button class="secondary-button" id="rerollButton" type="button">Új dobás</button>
+        <button class="primary-button" id="startButton" type="button">Belépek a hegybe</button>
+      </div>
     </div>
+  </div>
 
-    <audio id="bg-music" src="music.mp3" loop></audio>
-
-    <div class="game-container">
-        <header>
-            <h1>A Sötétség Erdeje</h1>
-        </header>
-        <main id="story-text">Betöltés...</main>
-
-        <div id="player-stats">
-            <b style="color: white; text-transform: uppercase;">Statisztika</b><br>
-            ❤️ Életerő: <span id="hp">40</span>/40 <br>
-            🎲 Ügyesség: <span id="skill">20</span> <br>
-            🧪 Varázsital: <span id="potions">3</span> db <br>
-            🎒 Hátizsák: <span id="inventory">Üres</span>
-        </div>
-
-        <div id="choices-container"></div>
+  <div class="modal-backdrop hidden" id="rulesModal" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
+    <div class="modal rules">
+      <p class="eyebrow">Rövid szabálylap</p>
+      <h2 id="rulesTitle">A harc menete</h2>
+      <p>Minden fordulóban az ellenfél és te is dobtok 2k6-tal, majd hozzáadjátok az Ügyességet. A nagyobb támadóerő sebez, döntetlennél egyik fél sem veszít Életerőt.</p>
+      <p>Az alap sebzés 2 Életerő. Sebzés után Szerencsét próbálhatsz: sikerrel nagyobb sebet okozol vagy csökkented a kapott sebet, balszerencsével viszont rosszabbul jársz. Minden szerencsepróba 1 ponttal csökkenti a Szerencsét.</p>
+      <p>Harc közben nem ehetsz és nem ihatsz varázsitalt. Menekülni csak ott lehet, ahol a fejezet engedi, és ennek ára van.</p>
+      <div class="modal-actions">
+        <button class="primary-button" id="closeRulesButton" type="button">Rendben</button>
+      </div>
     </div>
+  </div>
 </body>
 </html>
