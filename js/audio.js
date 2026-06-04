@@ -1,3 +1,3 @@
 "use strict";
 
-// A zene kezelését az új egységes script.js végzi.
+// A zene kezelését az egységes script.js végzi.

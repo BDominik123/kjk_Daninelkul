@@ -1,3 +1,3 @@
 "use strict";
 
-// A játék új motorja a gyökérkönyvtárban lévő script.js fájlban fut.
+// A játék egységes motorja a gyökérkönyvtárban lévő script.js fájlban fut.

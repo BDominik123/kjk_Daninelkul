@@ -3,13 +3,42 @@
     "title": "A Parázskapuk Labirintusa",
     "language": "hu",
     "chapterCount": 50,
-    "note": "Eredeti, rövid webes kaland a klasszikus kockadobásos szabályrendszer mintájára."
+    "note": "Eredeti, rövid webes kaland a klasszikus KJK/Fighting Fantasy harcrendszer mintájára."
   },
   "rules": {
+    "startChapter": "c001",
+    "winChapter": "c048",
+    "deathChapter": "c049",
     "startingInventory": ["basic_sword", "shield", "leather_armor", "lantern"],
+    "startingWeapon": "basic_sword",
+    "startingArmor": "leather_armor",
     "startingGold": 6,
     "startingProvisions": 10,
-    "provisionHeal": 4
+    "provisionHeal": 4,
+    "potionDoses": 2,
+    "combat": {
+      "baseDamage": 2,
+      "fleeDamage": 2,
+      "luckAttackBonus": 2,
+      "unluckyAttackHeal": 1,
+      "luckDefenseHeal": 1,
+      "unluckyDefenseDamage": 1
+    }
+  },
+  "combatTags": {
+    "humanoid": "ember",
+    "beast": "vadállat",
+    "undead": "élőholt",
+    "demon": "démoni",
+    "fire": "láng",
+    "venom": "méreg",
+    "armored": "páncélos",
+    "brutal": "brutális",
+    "quick": "gyors",
+    "curse": "átok",
+    "piercing": "páncéltörő",
+    "splitting": "osztódó",
+    "spellcaster": "varázsló"
   },
   "potions": {
     "skill": {
@@ -36,7 +65,7 @@
   },
   "items": {
     "basic_sword": { "name": "Kard" },
-    "shield": { "name": "Pajzs" },
+    "shield": { "name": "Kerek pajzs" },
     "leather_armor": { "name": "Bőrpáncél" },
     "lantern": { "name": "Lámpás" },
     "maze_map": { "name": "Füstös térképdarab" },
@@ -53,9 +82,13 @@
     "obsidian_sword": { "name": "Obszidián kard" }
   },
   "weapons": {
-    "basic_sword": { "name": "Kard", "attackBonus": 0 },
-    "silver_blade": { "name": "Ezüstélű kard", "attackBonus": 1 },
-    "obsidian_sword": { "name": "Obszidián kard", "attackBonus": 2 }
+    "basic_sword": { "name": "Kard", "attackBonus": 0, "damageBonus": 0, "tags": ["steel"] },
+    "silver_blade": { "name": "Ezüstélű kard", "attackBonus": 1, "damageBonus": 0, "tags": ["silver"] },
+    "obsidian_sword": { "name": "Obszidián kard", "attackBonus": 2, "damageBonus": 1, "tags": ["obsidian"] }
+  },
+  "armor": {
+    "leather_armor": { "name": "Bőrpáncél", "reduction": 0 },
+    "ember_shield": { "name": "Parázspajzs", "reduction": 1 }
   },
   "chapters": [
     {
@@ -64,7 +97,7 @@
       "type": "story",
       "text": [
         "Két nap gyaloglás után a Tűzhegy oldalában állsz. A csúcs vörös növényei úgy izzanak a ködben, mintha parázs nőne a sziklából.",
-        "A barlang szájánál durva rács áll, mellette füstös őrtűz. Egy keskeny kecskeösvény is felkúszik a sziklafalra, de onnan könnyű lezuhanni."
+        "A barlang szájánál durva rács áll, mellette őrtűz füstöl. Egy keskeny kecskeösvény is felkúszik a sziklafalra, de onnan könnyű lezuhanni."
       ],
       "choices": [
         { "label": "A rácsos kapuhoz mész", "hint": "Az őrökön át vezet a biztosabb bejárat.", "next": "c002" },
@@ -76,7 +109,7 @@
       "title": "Az éhes őrök",
       "type": "story",
       "text": [
-        "Két zömök barlangőr ül a tűz mellett. A sisakjuk nagyobb náluk, a hasuk viszont még annál is nagyobb. Aranyat, ételt vagy vért akarnak.",
+        "Két zömök barlangőr ül a tűz mellett. Aranyat, ételt vagy vért akarnak, és a mosolyukból nem derül ki, melyiknek örülnének jobban.",
         "A rács mögött három folyosó sötétlik. Ha zajt csapsz, minden terem tudni fogja, hogy megérkeztél."
       ],
       "choices": [
@@ -94,8 +127,8 @@
         { "type": "gold", "amount": 1 }
       ],
       "text": [
-        "A keskeny párkányon átkelsz, és egy régi csontváz mellett találsz egy koromtól fekete térképdarabot. A jelölések nem teljesek, de néhány zsákutcát felismerhetővé tesznek.",
-        "A párkány végén egy szellőzőkürtő a bejárati csarnokba vezet."
+        "A keskeny párkányon átkelsz, és egy régi csontváz mellett koromtól fekete térképdarabot találsz. Néhány zsákutca felismerhető rajta.",
+        "A párkány végén szellőzőkürtő vezet a bejárati csarnokba."
       ],
       "choices": [
         { "label": "Megnézed a térképdarab hátoldalát", "hint": "Egy jel talán segít később.", "next": "c008" }
@@ -106,7 +139,7 @@
       "title": "Három nedves folyosó",
       "type": "story",
       "text": [
-        "A bejárati csarnokban a víz vékony erekben fut a padlón. Nyugaton vasalt ajtó, keleten állatszagú repedés, északon lezárt rács vár.",
+        "A bejárati csarnokban víz fut vékony erekben a padlón. Nyugaton vasalt ajtó, keleten állatszagú repedés, északon lezárt rács vár.",
         "A tér hangja becsapós: minden lépésed úgy verődik vissza, mintha valaki követne."
       ],
       "choices": [
@@ -120,18 +153,18 @@
       "title": "Kapuharc",
       "type": "combat",
       "text": [
-        "Az őrök meglepően gyorsan kapnak fegyvert. Az első egy csorba bárddal támad, a második a rács mellől próbál bekeríteni.",
-        "A szabály egyszerű: amíg állnak, nem lépsz át rajtuk."
+        "Az őrök meglepően gyorsan kapnak fegyvert. Az első csorba bárddal támad, a második a rács mellől próbál bekeríteni.",
+        "Amíg állnak, nem lépsz át rajtuk."
       ],
       "combat": {
         "enemies": [
-          { "name": "Bibircsókos őr", "skill": 6, "stamina": 5 },
-          { "name": "Zömök őr", "skill": 7, "stamina": 6 }
+          { "id": "wart_guard", "name": "Bibircsókos őr", "skill": 6, "stamina": 5, "damage": 2, "tags": ["humanoid"] },
+          { "id": "stocky_guard", "name": "Zömök őr", "skill": 7, "stamina": 6, "damage": 2, "tags": ["humanoid"], "traits": ["brutal"] }
         ],
         "afterWin": "c004",
         "winLabel": "Átkutatod az őrhelyet",
         "winEffects": [{ "type": "gold", "amount": 2 }],
-        "victoryText": "A két őr elhallgat. A tűz mellett találsz két aranyat, aztán belépsz a csarnokba."
+        "victoryText": "A két őr elhallgat. A tűz mellett két aranyat találsz, aztán belépsz a csarnokba."
       }
     },
     {
@@ -140,7 +173,7 @@
       "type": "story",
       "effects": [{ "type": "flag", "flag": "fooled_guards" }],
       "text": [
-        "Azt állítod, hogy a faluból boroshordót küldtek nekik, csak épp a kanyar mögött gurult le a szekérről. A két őr azonnal vitatkozni kezd, melyikük menjen érte.",
+        "Azt állítod, hogy a faluból boroshordót küldtek nekik, csak épp a kanyar mögött gurult le a szekérről.",
         "Amíg egymást lökdösik, átcsúszol a rácson."
       ],
       "choices": [
@@ -152,7 +185,7 @@
       "title": "Megcsörren a kard",
       "type": "story",
       "text": [
-        "A meséd túl hosszúra nyúlik. Az egyik őr rád hunyorít, a másik pedig észreveszi, hogy a kardod markolata kilátszik a köpenyed alól.",
+        "A meséd túl hosszúra nyúlik. Az egyik őr rád hunyorít, a másik észreveszi a kardod markolatát.",
         "Most már nincs alku."
       ],
       "choices": [
@@ -177,7 +210,7 @@
       "title": "Csúszó kő",
       "type": "story",
       "text": [
-        "A párkányon megcsúszik a lábad. Nem zuhansz a mélybe, de a térded keményen a sziklához csapódik, és csak lassan tudsz leereszkedni.",
+        "A párkányon megcsúszik a lábad. Nem zuhansz a mélybe, de a térded keményen a sziklához csapódik.",
         "A kerülőút így is bejuttat a hegybe, de az első seb már emlékeztet rá, hogy a barlang nem kegyes."
       ],
       "choices": [
@@ -193,7 +226,7 @@
         "A sarokban sárgaréz zárral lezárt láda áll. A fedelén friss karcolások látszanak."
       ],
       "choices": [
-        { "label": "Elveszed az ezüstélű kardot", "hint": "+1 támadóerő a harcokban.", "next": "c013" },
+        { "label": "Elveszed az ezüstélű kardot", "hint": "+1 támadóerő, élőholtak ellen további sebzés.", "next": "c013" },
         { "label": "Kinyitod a sárgaréz ládát", "hint": "Szerencsepróba: kincs vagy csapda.", "test": { "stat": "luck", "success": "c014", "failure": "c015", "failureEffects": [{ "type": "stat", "stat": "stamina", "amount": -2 }] } },
         { "label": "Visszamész a csarnokba", "next": "c004" }
       ]
@@ -203,7 +236,7 @@
       "title": "Patkányjárat",
       "type": "story",
       "text": [
-        "A keleti repedés után alacsony járat nyílik. A padló tele van csonttal és nedves szőrrel. Valami nagyobb mozog a sötétben, mint amekkora patkánynak illene lennie.",
+        "A keleti repedés után alacsony járat nyílik. A padló tele van csonttal és nedves szőrrel.",
         "A járat végén friss levegő áramlik, de a kaparás egyre közelebbről hallatszik."
       ],
       "choices": [
@@ -216,7 +249,7 @@
       "title": "Az északi rács",
       "type": "story",
       "text": [
-        "A rács mögött szélesebb folyosó húzódik. A zár régi, de nem gyenge. A falban rozsdás emelőkar ül, a padlón pedig régi vérfoltok jelzik, hogy más is próbálkozott már.",
+        "A rács mögött szélesebb folyosó húzódik. A zár régi, de nem gyenge. A falban rozsdás emelőkar ül.",
         "Ha van megfelelő kulcsod, most hasznát veheted."
       ],
       "choices": [
@@ -247,7 +280,7 @@
         { "type": "gold", "amount": 3 }
       ],
       "text": [
-        "A zár halkan kattan. Odabent egy sárgaréz kulcs és három lapos aranypénz fekszik. A láda alján apró nyílások vannak, de most nem fújnak mérget.",
+        "A zár halkan kattan. Odabent sárgaréz kulcs és három lapos aranypénz fekszik.",
         "A kulcs mérete alapján a folyosó rácsához tartozhat."
       ],
       "choices": [
@@ -275,7 +308,7 @@
         "Nincs hely kikerülni. A járatban csak előre vagy vissza lehet menni."
       ],
       "combat": {
-        "enemies": [{ "name": "Óriáspatkány", "skill": 6, "stamina": 5 }],
+        "enemies": [{ "id": "giant_rat", "name": "Óriáspatkány", "skill": 6, "stamina": 5, "damage": 2, "tags": ["beast"], "traits": ["quick"] }],
         "fleeTo": "c004",
         "afterWin": "c017",
         "winLabel": "Tovább a járaton",
@@ -313,7 +346,7 @@
       "title": "Visszacsapó vas",
       "type": "story",
       "text": [
-        "Az emelőkar félúton megakad, majd visszacsap. A tenyered felreped, és a rács ugyanott marad, ahol volt.",
+        "Az emelőkar félúton megakad, majd visszacsap. A tenyered felreped, és a rács ugyanott marad.",
         "A szolgafolyosó még nyitva áll."
       ],
       "choices": [
@@ -327,11 +360,11 @@
       "type": "story",
       "text": [
         "Egy alacsony, szakállas kereskedő ül a falmélyedésben. Azt mondja, nem kérdezi, honnan jöttél, ha te sem kérdezed, honnan vannak a holmijai.",
-        "Olajat, pajzsot és egy vaskulcsot kínál. A hangja nyugodt, de a sarokban két bunkó is kéznél van."
+        "Olajat, parázspajzsot és egy vaskulcsot kínál. A hangja nyugodt, de a sarokban két bunkó is kéznél van."
       ],
       "choices": [
         { "label": "Veszel lámpaolajat 1 aranyért", "requires": { "gold": 1 }, "effects": [{ "type": "gold", "amount": -1 }, { "type": "addItem", "item": "lantern_oil" }], "next": "c022" },
-        { "label": "Veszel parázspajzsot 3 aranyért", "requires": { "gold": 3 }, "effects": [{ "type": "gold", "amount": -3 }, { "type": "addItem", "item": "ember_shield" }], "next": "c022" },
+        { "label": "Veszel parázspajzsot 3 aranyért", "requires": { "gold": 3 }, "effects": [{ "type": "gold", "amount": -3 }, { "type": "equipArmor", "armor": "ember_shield" }], "next": "c022" },
         { "label": "Veszel vaskulcsot 2 aranyért", "requires": { "gold": 2 }, "effects": [{ "type": "gold", "amount": -2 }, { "type": "addItem", "item": "iron_key" }], "next": "c022" },
         { "label": "Megfenyegeted", "hint": "A kereskedő őrei közbelépnek.", "next": "c023" }
       ]
@@ -341,7 +374,7 @@
       "title": "Föld alatti folyó",
       "type": "story",
       "text": [
-        "A barlang hirtelen óriási csarnokká tágul. Közepén fekete folyó rohan, a túlsó parton kék lángok égnek.",
+        "A barlang óriási csarnokká tágul. Közepén fekete folyó rohan, a túlsó parton kék lángok égnek.",
         "Egy csónakos vár a parton. Három aranyért átvisz, különben a vízre bízod magad."
       ],
       "choices": [
@@ -361,7 +394,8 @@
       "choices": [
         { "label": "Megvizsgálod az üres kezű szobrot", "hint": "Kincs vagy csapda.", "next": "c027" },
         { "label": "A konyhaszagú déli folyosóra mész", "next": "c028" },
-        { "label": "Lemész a pókhálós lépcsőn", "next": "c029" }
+        { "label": "Lemész a pókhálós lépcsőn", "next": "c029" },
+        { "label": "A folyó morajlását követed", "next": "c021" }
       ]
     },
     {
@@ -374,8 +408,8 @@
       ],
       "combat": {
         "enemies": [
-          { "name": "Bunkós zsoldos", "skill": 7, "stamina": 5 },
-          { "name": "Sebhelyes zsoldos", "skill": 7, "stamina": 6 }
+          { "id": "club_guard", "name": "Bunkós zsoldos", "skill": 7, "stamina": 5, "damage": 2, "tags": ["humanoid"], "traits": ["brutal"] },
+          { "id": "scar_guard", "name": "Sebhelyes zsoldos", "skill": 7, "stamina": 6, "damage": 2, "tags": ["humanoid"], "traits": ["quick"] }
         ],
         "fleeTo": "c020",
         "afterWin": "c022",
@@ -404,11 +438,11 @@
       "title": "A révész haragja",
       "type": "combat",
       "text": [
-        "A révész görbe botja hirtelen lándzsaként villan. Öregnek látszott, de a mozdulatai olyan pontosak, mint egy gyakorlott párbajozóé.",
+        "A révész görbe botja hirtelen lándzsaként villan. Öregnek látszott, de a mozdulatai gyakorlott párbajozóéi.",
         "A csónak kötele a lábatok között feszül. Ha vesztesz, a folyó dönt."
       ],
       "combat": {
-        "enemies": [{ "name": "Révész", "skill": 8, "stamina": 7 }],
+        "enemies": [{ "id": "ferryman", "name": "Révész", "skill": 8, "stamina": 7, "damage": 2, "tags": ["humanoid"], "traits": ["piercing"] }],
         "fleeTo": "c021",
         "afterWin": "c030",
         "winEffects": [{ "type": "stat", "stat": "luck", "amount": -1 }],
@@ -422,7 +456,7 @@
       "type": "story",
       "effects": [{ "type": "flag", "flag": "crossed_bridge" }],
       "text": [
-        "A híd maradéka alig tart, de a megfelelő pillanatban ugrasz. A túloldalon térdre esel, a mélységből felcsapó pára pedig hidegen végignyalja a hátad.",
+        "A híd maradéka alig tart, de a megfelelő pillanatban ugrasz. A túloldalon térdre esel, a mélységből felcsapó pára hidegen végignyalja a hátad.",
         "Nem kellett fizetned, és a folyó sem kapott el."
       ],
       "choices": [
@@ -480,7 +514,7 @@
         { "label": "A kriptába lépsz", "next": "c037" },
         { "label": "A forró kovácsműhelybe mész", "next": "c038" },
         { "label": "A tükrös folyosót választod", "next": "c039" },
-        { "label": "A fekete kaput nyitod", "requires": { "items": ["bronze_key", "silver_key", "bone_key"] }, "next": "c046" }
+        { "label": "A fekete kaput nyitod", "requires": { "items": ["bronze_key", "silver_key", "bone_key"] }, "next": "c046", "tone": "good" }
       ]
     },
     {
@@ -504,7 +538,7 @@
         { "type": "stat", "stat": "luck", "amount": 1 }
       ],
       "text": [
-        "A bronzkulcs a kezedben landol, a rejtett dárda pedig a köpenyed szélét hasítja csak fel.",
+        "A bronzkulcs a kezedben landol, a rejtett dárda pedig csak a köpenyed szélét hasítja fel.",
         "A kőalak szeme újra lecsukódik. Egy pillanatra úgy érzed, a hegy elismerte a gyorsaságod."
       ],
       "choices": [
@@ -534,7 +568,8 @@
         "Azt is hozzáteszi, hogy a rubinszem nem kincs, hanem fegyver egy varázsló ellen."
       ],
       "choices": [
-        { "label": "A folyó túlsó parti csarnokába tartasz", "next": "c030" }
+        { "label": "A folyóhoz mész", "next": "c021" },
+        { "label": "Visszatérsz a kőalakok termébe", "next": "c022" }
       ]
     },
     {
@@ -547,8 +582,8 @@
       ],
       "combat": {
         "enemies": [
-          { "name": "Részeg őr", "skill": 6, "stamina": 5 },
-          { "name": "Késes őr", "skill": 7, "stamina": 5 }
+          { "id": "drunk_guard", "name": "Részeg őr", "skill": 6, "stamina": 5, "damage": 2, "tags": ["humanoid"] },
+          { "id": "knife_guard", "name": "Késes őr", "skill": 7, "stamina": 5, "damage": 2, "tags": ["humanoid"], "traits": ["piercing"] }
         ],
         "fleeTo": "c022",
         "afterWin": "c030",
@@ -569,7 +604,7 @@
         "A lépcső alján ezüstkulcs és pókselyem kötél hever."
       ],
       "combat": {
-        "enemies": [{ "name": "Óriáspók", "skill": 7, "stamina": 8 }],
+        "enemies": [{ "id": "giant_spider", "name": "Óriáspók", "skill": 7, "stamina": 8, "damage": 2, "tags": ["beast"], "traits": ["venom", "quick"] }],
         "fleeTo": "c022",
         "afterWin": "c030",
         "winEffects": [
@@ -585,11 +620,11 @@
       "title": "A hideg kripta",
       "type": "combat",
       "text": [
-        "A kripta levegője száraz és fagyos. A koporsók között egy fehér árny emelkedik fel, kezében csontból faragott kulccsal.",
+        "A kripta levegője száraz és fagyos. A koporsók között fehér árny emelkedik fel, kezében csontból faragott kulccsal.",
         "Az ezüst fegyverek tisztábban csengenek itt, de bármilyen penge jobb, mint a puszta kéz."
       ],
       "combat": {
-        "enemies": [{ "name": "Síri árny", "skill": 8, "stamina": 7 }],
+        "enemies": [{ "id": "grave_shade", "name": "Síri árny", "skill": 8, "stamina": 7, "damage": 2, "tags": ["undead"], "traits": ["curse"] }],
         "fleeTo": "c030",
         "afterWin": "c040",
         "winLabel": "Elveszed a csontkulcsot",
@@ -645,7 +680,7 @@
         "A kard mögötte fekszik, és a markolata nem ég el a tűzben."
       ],
       "combat": {
-        "enemies": [{ "name": "Tűzkutya", "skill": 8, "stamina": 8 }],
+        "enemies": [{ "id": "fire_hound", "name": "Tűzkutya", "skill": 8, "stamina": 8, "damage": 2, "tags": ["beast"], "traits": ["fire", "brutal"] }],
         "fleeTo": "c038",
         "afterWin": "c045",
         "winLabel": "Elveszed az obszidián kardot",
@@ -696,7 +731,7 @@
       "type": "story",
       "effects": [{ "type": "equip", "weapon": "obsidian_sword" }],
       "text": [
-        "Az obszidián kard nehezebb az ezüstpengénél, de a súlya biztos. A támadóerőd megnő, amíg ezt forgatod.",
+        "Az obszidián kard nehezebb az ezüstpengénél, de a súlya biztos. A támadóerőd és a sebzésed is megnő, amíg ezt forgatod.",
         "A kohó fénye halványul, mintha a kard vitte volna magával a műhely szívét."
       ],
       "choices": [
@@ -730,13 +765,16 @@
     },
     {
       "id": "c048",
-      "title": "A láda kinyílik",
+      "title": "Kivitted a játékot!",
       "type": "ending",
       "ending": "victory",
-      "effects": [{ "type": "flag", "flag": "won" }],
+      "effects": [
+        { "type": "flag", "flag": "won" },
+        { "type": "message", "text": "Kivitted a Parázskapuk Labirintusát." }
+      ],
       "text": [
         "A varázsló utolsó kártyája hamuvá omlik. A terem hátsó falán aranyveretes láda emelkedik ki a kőből, és a három kulcsod fénye végigfut rajta.",
-        "Nem minden kincs arany, de ebben a ládában abból is van elég. A fontosabb zsákmány a térkép, amely kivezet a hegyből. Túlélted a Parázskapuk Labirintusát."
+        "Nem minden kincs arany, de ebben a ládában abból is van elég. A fontosabb zsákmány a térkép, amely kivezet a hegyből. Kivitted a Parázskapuk Labirintusát."
       ],
       "choices": []
     },
@@ -762,11 +800,15 @@
       "combat": {
         "enemies": [
           {
+            "id": "warlock",
             "name": "Fekete kesztyűs varázsló",
             "skill": 11,
             "stamina": 18,
+            "damage": 3,
+            "tags": ["humanoid"],
+            "traits": ["spellcaster", "curse", "armored"],
             "adjustments": [
-              { "flag": "warlock_weakened", "name": "Meggyengített varázsló", "skill": -2, "stamina": -4 }
+              { "flag": "warlock_weakened", "name": "Meggyengített varázsló", "skill": -2, "stamina": -4, "damage": -1, "addTags": ["demon"] }
             ]
           }
         ],

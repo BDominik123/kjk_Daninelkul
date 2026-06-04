@@ -1,3 +1,3 @@
 "use strict";
 
-// A beállítások és szabálypanel kezelése az új egységes script.js része.
+// A beállításokat, szabálypanelt és mentést az egységes script.js kezeli.
